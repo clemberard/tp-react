@@ -9,20 +9,24 @@ type Iprops = {
 };
 
 const Checkbox: React.FC<Iprops> = ({ label }) => {
-	const [isChecked, setIsChecked] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-	const handleCheckboxChange = () => {
-		setIsChecked(!isChecked);
-	};
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
 
-	return (
-		<div>
-			<label>
-				<input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
-				{label}
-			</label>
-		</div>
-	);
+  return (
+    <div>
+      <label>
+        <input
+          type="checkbox"
+          checked={isChecked}
+          onChange={handleCheckboxChange}
+        />
+        {label}
+      </label>
+    </div>
+  );
 };
 
 export { Checkbox };
