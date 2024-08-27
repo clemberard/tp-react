@@ -18,4 +18,4 @@ jobs:
       - name: run type check
         run: npm run type-check
       - name: run test
-        run: npx vitest
+        run: npm run vitest
