@@ -9,7 +9,7 @@
     "lint": "eslint . --report-unused-disable-directives --max-warnings=0",
     "format": "prettier --write ./src --list-different",
     "type-check": "tsc -b",
-    "test": "vitest",
+    "vitest": "vitest",
     "preview": "vite preview"
   },
   "dependencies": {
