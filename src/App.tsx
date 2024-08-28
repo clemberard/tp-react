@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, ButtonRemove, ButtonEdit } from "./components/Button";
 import { Input } from "./components/Input";
 import { Checkbox } from "./components/Checkbox";
-import { DragDropContext, Droppable, Draggable, DraggableProvided, DroppableProvided } from "react-beautiful-dnd";
+import { DragDropContext, Droppable, Draggable, DraggableProvided, DroppableProvided, DropResult } from "react-beautiful-dnd";
 
 type Todo = {
 	id: number;
@@ -31,6 +31,22 @@ function App() {
 		const newTodosValue = todos.filter((todo) => todo.id !== id);
 		setTodos(newTodosValue);
 	};
+
+	const dragEndDroppable = (result: DropResult) => {
+		const { destination, source } = result;
+		if (!destination) {
+			return;
+		}
+		if (destination.droppableId === source.droppableId && destination.index === source.index) {
+			return;
+		}
+		const newTodosValue = [...todos];
+		const [removed] = newTodosValue.splice(source.index, 1);
+		newTodosValue.splice(destination.index, 0, removed);
+		setTodos(newTodosValue);
+
+		return newTodosValue;
+	}
 
 	const changeStateTask = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const id = Number(event.target.name);
@@ -74,8 +90,8 @@ function App() {
 						text="Add task"
 					></Button>
 				</div>
-				<DragDropContext onDragEnd={() => {}}>
-					<Droppable droppableId="todos">
+				<DragDropContext onDragEnd={dragEndDroppable}>
+					<Droppable droppableId='todos'>
 						{(provided: DroppableProvided) => (
 							<div ref={provided.innerRef} {...provided.droppableProps}>
 								{todos.map((todo: Todo, index: number) => {
